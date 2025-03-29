@@ -35,6 +35,11 @@ public class PlayerController : MonoBehaviour
         DoPlayerMovement();
     }
 
+    public void FlipGravity()
+    {
+        _rb.gravityScale *= -1;
+    }
+
     void GroundCheck()
     {
         // Send a raycast downward

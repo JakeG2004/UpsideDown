@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private KeyCode _jump = KeyCode.W;
 
     [SerializeField] private float _acceleration = 1.5f;
-    [SerializeField] private float _topSpeed = 10.0f;
+    [SerializeField] private float _topSpeed = 5f;
     [SerializeField] private float _drag = 0.25f;
     [SerializeField] private float _jumpForce = 5.0f;
     [SerializeField] private Transform _raycastPos;
@@ -30,14 +30,6 @@ public class PlayerController : MonoBehaviour
         if(!_rb)
         {
             Debug.LogWarning("Failed to get rigidbody!");
-        }
-        
-        // Change inputs if player 2
-        if(tag == "Player2")
-        {
-        	_left = KeyCode.LeftArrow;
-        	_right = KeyCode.RightArrow;
-        	_jump = KeyCode.UpArrow;
         }
     }
 
@@ -96,7 +88,10 @@ public class PlayerController : MonoBehaviour
         	_sr.flipX = false;
             
             _rb.linearVelocityX += _acceleration;
-            _animator.Play("Run");
+            if(!_animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+            {
+            	_animator.Play("Run");
+        	}
         }
 
         else if(Input.GetKey(_left))
@@ -104,14 +99,17 @@ public class PlayerController : MonoBehaviour
         	_sr.flipX = true;
             
             _rb.linearVelocityX -= _acceleration;
-            _animator.Play("Run");
+            if(!_animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+            {
+            	_animator.Play("Run");
+        	}
         }
 
         // Drag
         else if(Mathf.Abs(_rb.linearVelocityX) != 0.0f)
         {
             // Stop moving when slow enough
-            if(Mathf.Abs(_rb.linearVelocityX) <= 0.1f)
+            if(Mathf.Abs(_rb.linearVelocityX) <= 0.2f)
             {
                 _rb.linearVelocityX = 0.0f;
             }
@@ -132,7 +130,6 @@ public class PlayerController : MonoBehaviour
         // Jumping
         if(Input.GetKeyDown(_jump) && _isGrounded)
         {
-//            _rb.linearVelocityY = _jumpForce;
             // Second frame of the animation calls jump()
             _animator.Play("Jump");
         }

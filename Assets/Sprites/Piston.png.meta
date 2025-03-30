@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 802b28424a88476d2a2c62923b511960
+guid: f3379b0107e4c4b7aadb7cc275da4f01
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1570582575325527468
-    second: Pink_Monster_0
+      213: 2382593414236350596
+    second: Piston_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Pink_Monster_0
+      name: Piston_0
       rect:
         serializedVersion: 2
-        x: 6
+        x: 0
         y: 0
-        width: 19
-        height: 29
+        width: 70
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cad32bce784dbc510800000000000000
-      internalID: 1570582575325527468
+      spriteID: 4882eb3361ca01120800000000000000
+      internalID: 2382593414236350596
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Pink_Monster_0: 1570582575325527468
+      Piston_0: 2382593414236350596
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

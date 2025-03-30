@@ -4,15 +4,19 @@ public class PistonController : MonoBehaviour
 {
 	// Characteristics
 	private float speed = 10f;
+	private float power = 10f;
 	
 	private float startY;
 	private float endY;
 	private bool movingUp = true;
 	private bool moving = false;
 	
+	// Player
+	private GameObject Player;
+	
 	// Called when initialized
 	public void Start()
-	{
+	{	
 		startY = transform.position.y;
 		endY = startY + 1;
 	}
@@ -59,6 +63,16 @@ public class PistonController : MonoBehaviour
     	else
     	{
     		Debug.Log("ERROR: No possible movement");
+    	}
+    }
+    
+    // Push player
+    public void OnTriggerEnter2D(Collider2D obj)
+    {
+    	if(obj.tag == "Player")
+		{
+    		Rigidbody2D playerRb = obj.GetComponent<Rigidbody2D>();
+    		playerRb.linearVelocityY = power;
     	}
     }
 }

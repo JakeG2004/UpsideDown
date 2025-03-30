@@ -36,13 +36,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GroundCheck();
-        DoPlayerMovement();
+    	// Only update if the player isn't dying
+        if(!_animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+        {
+        	GroundCheck();
+        	DoPlayerMovement();
+    	}
+    	else
+    	{
+    		_rb.linearVelocityX = 0;
+    	}
     }
 
     public void FlipGravity()
     {
         _rb.gravityScale *= -1;
+        _sr.flipY = !_sr.flipY;
     }
 
     void GroundCheck()
@@ -88,6 +97,8 @@ public class PlayerController : MonoBehaviour
         	_sr.flipX = false;
             
             _rb.linearVelocityX += _acceleration;
+            
+            // If player isn't jumping, play run animation
             if(!_animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
             {
             	_animator.Play("Run");
@@ -135,8 +146,25 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+    // Called by the second frame of the "Jump" animation
     private void jump()
     {
     	_rb.linearVelocityY = _jumpForce;
+    }
+    
+    // Called by the last frame of the "Die" animation
+    private void die()
+    {
+    	Destroy(gameObject);
+    }
+    
+    // Collision
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+    	if( (coll.gameObject.tag == "BlueKiller" && tag == "Player1")
+    	 || (coll.gameObject.tag == "GreenKiller" && tag == "Player2") )
+    	{
+    		_animator.Play("Die");
+    	}
     }
 }

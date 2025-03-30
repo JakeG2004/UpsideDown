@@ -69,10 +69,10 @@ public class PistonController : MonoBehaviour
     // Push player
     public void OnTriggerEnter2D(Collider2D obj)
     {
-    	if(obj.tag == "Player")
-		{
+//    	if(obj.tag == "Player")
+//		{
     		Rigidbody2D playerRb = obj.GetComponent<Rigidbody2D>();
     		playerRb.linearVelocityY = power;
-    	}
+//    	}
     }
 }

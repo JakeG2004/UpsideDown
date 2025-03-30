@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+    	// Get references to components
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _sr = GetComponent<SpriteRenderer>();
@@ -29,6 +30,14 @@ public class PlayerController : MonoBehaviour
         if(!_rb)
         {
             Debug.LogWarning("Failed to get rigidbody!");
+        }
+        
+        // Change inputs if player 2
+        if(tag == "Player2")
+        {
+        	_left = KeyCode.LeftArrow;
+        	_right = KeyCode.RightArrow;
+        	_jump = KeyCode.UpArrow;
         }
     }
 
@@ -124,6 +133,7 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(_jump) && _isGrounded)
         {
 //            _rb.linearVelocityY = _jumpForce;
+            // Second frame of the animation calls jump()
             _animator.Play("Jump");
         }
     }

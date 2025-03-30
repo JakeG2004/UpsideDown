@@ -2,21 +2,20 @@ using UnityEngine;
 
 public class GravityGate : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private enum GateType
     {
-        
+        P1,
+        P2,
+        All
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] GateType _gateType;
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Test");
-        other.GetComponent<PlayerController>().FlipGravity();
+        if((other.gameObject.tag == "Player1" && _gateType == GateType.P1) || (other.gameObject.tag == "Player2" && _gateType == GateType.P2))
+        {
+            other.GetComponent<PlayerController>().FlipGravity();
+        }
     }
 }

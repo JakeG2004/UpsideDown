@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D _rb;
+    private Animator _animator;
+    private SpriteRenderer _sr;
 
     [SerializeField] private KeyCode _left = KeyCode.A;
     [SerializeField] private KeyCode _right = KeyCode.D;
@@ -21,6 +23,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
+        _sr = GetComponent<SpriteRenderer>();
 
         if(!_rb)
         {
@@ -67,15 +71,31 @@ public class PlayerController : MonoBehaviour
 
     void DoPlayerMovement()
     {
+    	// Stop running animation
+        if(Input.GetKeyUp(_right))
+        {
+        	_animator.Play("Idle");
+        }
+        else if(Input.GetKeyUp(_left))
+        {
+        	_animator.Play("Idle");
+        }
+        
         // Get horizontal movement
         if(Input.GetKey(_right))
         {
+        	_sr.flipX = false;
+            
             _rb.linearVelocityX += _acceleration;
+            _animator.Play("Run");
         }
 
         else if(Input.GetKey(_left))
         {
+        	_sr.flipX = true;
+            
             _rb.linearVelocityX -= _acceleration;
+            _animator.Play("Run");
         }
 
         // Drag
@@ -103,7 +123,13 @@ public class PlayerController : MonoBehaviour
         // Jumping
         if(Input.GetKeyDown(_jump) && _isGrounded)
         {
-            _rb.linearVelocityY = _jumpForce;
+//            _rb.linearVelocityY = _jumpForce;
+            _animator.Play("Jump");
         }
+    }
+    
+    private void jump()
+    {
+    	_rb.linearVelocityY = _jumpForce;
     }
 }

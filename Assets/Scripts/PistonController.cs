@@ -4,7 +4,7 @@ public class PistonController : MonoBehaviour
 {
 	// Characteristics
 	private float speed = 10f;
-	private float power = 10f;
+	[SerializeField] private float power = 10f;
 	
 	private Vector3 start;
 	private Vector3 end;

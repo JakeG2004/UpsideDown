@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private Animator _animator;
     private SpriteRenderer _sr;
+    private Collider2D _collider;
 
     [SerializeField] private KeyCode _left = KeyCode.A;
     [SerializeField] private KeyCode _right = KeyCode.D;
@@ -26,6 +27,8 @@ public class PlayerController : MonoBehaviour
 
 
     private bool _isGrounded = true;
+    private float timer = 0f;
+    [SerializeField] private float collisionCooldown = 0.2f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,6 +36,7 @@ public class PlayerController : MonoBehaviour
     	// Get references to components
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+        _collider = GetComponent<Collider2D>();
         _sr = GetComponent<SpriteRenderer>();
         _as = GetComponent<AudioSource>();
 
@@ -48,6 +52,15 @@ public class PlayerController : MonoBehaviour
     	// Only update if the player isn't dying
         if(!_animator.GetCurrentAnimatorStateInfo(0).IsName("Die"))
         {
+        	if(_collider.isTrigger == true)
+        	{
+        		timer += Time.deltaTime;
+        	}
+        	if(timer >= collisionCooldown)
+        	{
+        		timer = 0;
+        		_collider.isTrigger = false;
+        	}
         	GroundCheck();
         	DoPlayerMovement();
     	}
@@ -74,6 +87,14 @@ public class PlayerController : MonoBehaviour
         if(hit)
         {
             float dist = Mathf.Abs(hit.point.y - _raycastPos.position.y);
+            
+            // Check for collision with bottom of other player
+            if( dist < _groundCheckDist
+             && (hit.collider.tag == "Player1" || hit.collider.tag == "Player2")
+             && (hit.collider.GetComponent<Rigidbody2D>().gravityScale != _rb.gravityScale) )
+            {
+            	_collider.isTrigger = true;
+            }
 
             // set if close enough
             if(dist < _groundCheckDist)
@@ -82,6 +103,7 @@ public class PlayerController : MonoBehaviour
                 return;
             }
 
+            
             // otherwise, dont set
             _isGrounded = false;
             return;

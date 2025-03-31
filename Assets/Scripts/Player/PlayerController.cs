@@ -164,9 +164,18 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D coll)
     {
     	if( (coll.gameObject.tag == "BlueKiller" && tag == "Player1")
-    	 || (coll.gameObject.tag == "GreenKiller" && tag == "Player2") )
+    	 || (coll.gameObject.tag == "GreenKiller" && tag == "Player2") 
+         || (coll.gameObject.tag == "Death") )
     	{
     		_animator.Play("Die");
     	}
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "Death")
+        {
+            _animator.Play("Die");
+        }
     }
 }

@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
     }
     
     // Called by the second frame of the "Jump" animation
-    private void jump()
+    public void jump()
     {
     	_rb.linearVelocityY = _jumpForce * Mathf.Sign(_rb.gravityScale);
     }

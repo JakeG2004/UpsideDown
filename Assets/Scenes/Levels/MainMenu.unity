@@ -1716,9 +1716,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Upside Down
-
-'
+  m_text: Shift
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: df63edbd12b5130208c9a834368d2468, type: 2}
   m_sharedMaterial: {fileID: 1437442466605958374, guid: df63edbd12b5130208c9a834368d2468, type: 2}

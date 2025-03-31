@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BackgroundColorChanger : MonoBehaviour
 {
+    private AudioSource _as;
+    [SerializeField] private AudioClip _colorChage;
     public static BackgroundColorChanger Instance { get; private set; }
 
     [SerializeField] private Color[] _colors;
@@ -25,6 +27,7 @@ public class BackgroundColorChanger : MonoBehaviour
 
     void Start()
     {
+        _as = GetComponent<AudioSource>();
         if (_colors.Length == 0)
         {
             Debug.LogWarning("No colors set in BackgroundColorChanger!");
@@ -45,6 +48,8 @@ public class BackgroundColorChanger : MonoBehaviour
 
     private void UpdateColors()
     {
+        _as.clip = _colorChage;
+        _as.Play();
         foreach (ColorObject co in _colorObjects)
         {
             bool isActive = co.GetColorIndex() != _curColorIndex;

@@ -9,10 +9,12 @@ public class PistonButtonController : MonoBehaviour
     private float pushDistance = 0.08f;
     private bool pushed = false;
     
+	private AudioSource _as;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+		_as = GetComponent<AudioSource>();
 //        Piston = GameObject.FindGameObjectWithTag("Piston").GetComponent<PistonController>();
     }
 
@@ -37,6 +39,7 @@ public class PistonButtonController : MonoBehaviour
 		Debug.Log("Button collision");
 		if(!pushed && (obj.tag == "Player1" || obj.tag == "Player2"))
 		{
+			_as.Play();
 			transform.position -= transform.up * pushDistance;
 			pushed = true;
 			Piston.activate();

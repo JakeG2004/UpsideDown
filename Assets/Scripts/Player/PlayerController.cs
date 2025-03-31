@@ -18,6 +18,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _raycastPos;
     [SerializeField] private float _groundCheckDist = 0.1f;
 
+    private AudioSource _as;
+
+    [SerializeField] private AudioClip _jumpSFX;
+    [SerializeField] private AudioClip _gravSound;
+    [SerializeField] private AudioClip _deathSound;
+
+
     private bool _isGrounded = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,6 +34,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _sr = GetComponent<SpriteRenderer>();
+        _as = GetComponent<AudioSource>();
 
         if(!_rb)
         {
@@ -51,6 +59,8 @@ public class PlayerController : MonoBehaviour
 
     public void FlipGravity()
     {
+        _as.clip = _gravSound;
+        _as.Play();
         _rb.gravityScale *= -1;
         transform.Rotate(180, 0, 0);
     }
@@ -150,12 +160,16 @@ public class PlayerController : MonoBehaviour
     // Called by the second frame of the "Jump" animation
     public void jump()
     {
+        _as.clip = _jumpSFX;
+        _as.Play();
     	_rb.linearVelocityY = _jumpForce * Mathf.Sign(_rb.gravityScale);
     }
     
     // Called by the last frame of the "Die" animation
     private void die()
     {
+        _as.clip = _deathSound;
+        _as.Play();
     	Destroy(gameObject);
     	SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

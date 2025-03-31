@@ -35,6 +35,7 @@ public class PistonController : MonoBehaviour
 	// Initiate piston movement
 	public void activate()
 	{
+		GetComponent<AudioSource>().Play();
 		moving = true;
 	}
 	

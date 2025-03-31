@@ -10,6 +10,7 @@ TagManager:
   - GreenKiller
   - BlueKiller
   - PauseMenu
+  - Feet
   layers:
   - Default
   - TransparentFX

@@ -2,17 +2,18 @@ using UnityEngine;
 
 public class PistonButtonController : MonoBehaviour
 {
-    private PistonController Piston;
+    public PistonController Piston;
     
     private float pushTimer = 0f;
     private float pushTime = 1.3f;
     private float pushDistance = 0.08f;
     private bool pushed = false;
     
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Piston = GameObject.FindGameObjectWithTag("Piston").GetComponent<PistonController>();
+//        Piston = GameObject.FindGameObjectWithTag("Piston").GetComponent<PistonController>();
     }
 
     // Update is called once per frame
@@ -26,7 +27,7 @@ public class PistonButtonController : MonoBehaviour
 			{
 				pushed = false;
 				pushTimer = 0f;
-				transform.position += new Vector3(0, pushDistance, 0);
+				transform.position += transform.up * pushDistance; //new Vector3(0, pushDistance, 0);
 			}
 		}
     }
@@ -36,7 +37,7 @@ public class PistonButtonController : MonoBehaviour
 		Debug.Log("Button collision");
 		if(!pushed && (obj.tag == "Player1" || obj.tag == "Player2"))
 		{
-			transform.position -= new Vector3(0, pushDistance, 0);
+			transform.position -= transform.up * pushDistance;
 			pushed = true;
 			Piston.activate();
 		}

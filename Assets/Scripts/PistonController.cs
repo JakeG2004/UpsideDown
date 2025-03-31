@@ -6,10 +6,11 @@ public class PistonController : MonoBehaviour
 	private float speed = 10f;
 	private float power = 10f;
 	
-	private float startY;
-	private float endY;
+	private Vector3 start;
+	private Vector3 end;
 	private bool movingUp = true;
 	private bool moving = false;
+	private float moveDist = 0f;
 	
 	// Player
 	private GameObject Player;
@@ -17,8 +18,8 @@ public class PistonController : MonoBehaviour
 	// Called when initialized
 	public void Start()
 	{	
-		startY = transform.position.y;
-		endY = startY + 1;
+		start = transform.position;
+		end = start + transform.up;
 	}
 	
 	// Called every frame
@@ -40,25 +41,29 @@ public class PistonController : MonoBehaviour
     private void move()
     {
     	// Move up and stop when it hits the top
-    	if(movingUp && transform.position.y <= endY)
+    	if(movingUp && moveDist < 1)
     	{
-    		transform.position += new Vector3(0, 1, 0) * speed * Time.deltaTime;
+    		transform.position += transform.up * speed * Time.deltaTime;
+    		moveDist += speed * Time.deltaTime;
     	}
-    	else if(movingUp && transform.position.y > endY)
+    	else if(movingUp && moveDist >= 1)
     	{
     		movingUp = false;
-    		transform.position = new Vector3(transform.position.x, endY, 0);
+    		moveDist = 0;
+    		transform.position = end;
     	}
     	// Move down and stop when hitting the bottom
-    	else if(!movingUp && transform.position.y >= startY)
+    	else if(!movingUp && moveDist < 1)
     	{
-    		transform.position -= new Vector3(0, 1, 0) * speed * Time.deltaTime;
+    		transform.position -= transform.up * speed * Time.deltaTime;
+    		moveDist += speed * Time.deltaTime;
     	}
-    	else if(!movingUp && transform.position.y < startY)
+    	else if(!movingUp && moveDist >= 1)
     	{
     		movingUp = true;
     		moving = false;
-    		transform.position = new Vector3(transform.position.x, startY, 0);
+    		moveDist = 0;
+    		transform.position = start;
     	}
     	else
     	{
@@ -72,7 +77,11 @@ public class PistonController : MonoBehaviour
 		if(moving && movingUp && (obj.tag == "Player1" || obj.tag == "Player2"))
 		{
     		Rigidbody2D playerRb = obj.GetComponent<Rigidbody2D>();
-    		playerRb.linearVelocityY = power;
-    	}
+    		playerRb.linearVelocityY = power * Mathf.Sign(playerRb.gravityScale);
+/*    		playerRb.linearVelocity = transform.up * power * Mathf.Sign(playerRb.gravityScale);
+    		Debug.Log(playerRb.linearVelocityX);
+    		playerRb.linearVelocityX *= 5;
+    		Debug.Log(playerRb.linearVelocityX);
+*/    	}
     }
 }

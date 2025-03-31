@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
     public void FlipGravity()
     {
         _rb.gravityScale *= -1;
-        _sr.flipY = !_sr.flipY;
+        transform.Rotate(180, 0, 0);
     }
 
     void GroundCheck()
@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
     // Called by the second frame of the "Jump" animation
     private void jump()
     {
-    	_rb.linearVelocityY = _jumpForce;
+    	_rb.linearVelocityY = _jumpForce * Mathf.Sign(_rb.gravityScale);
     }
     
     // Called by the last frame of the "Die" animation

@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private PauseMenu _pauseMenu;
     [SerializeField] private PauseMenu _levelBeatMenu;
-
+    
     public void IncrementPlayerGoalCount()
     {
         _playersAtGoal++;

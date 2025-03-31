@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -156,6 +157,7 @@ public class PlayerController : MonoBehaviour
     private void die()
     {
     	Destroy(gameObject);
+    	SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     
     // Collision

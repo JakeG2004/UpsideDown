@@ -11,6 +11,7 @@ public class PistonController : MonoBehaviour
 	private bool movingUp = true;
 	private bool moving = false;
 	private float moveDist = 0f;
+	private float maxMoveDist = 0.8f;
 	
 	// Player
 	private GameObject Player;
@@ -19,7 +20,7 @@ public class PistonController : MonoBehaviour
 	public void Start()
 	{	
 		start = transform.position;
-		end = start + transform.up;
+		end = start + transform.up * maxMoveDist;
 	}
 	
 	// Called every frame
@@ -41,24 +42,24 @@ public class PistonController : MonoBehaviour
     private void move()
     {
     	// Move up and stop when it hits the top
-    	if(movingUp && moveDist < 1)
+    	if(movingUp && moveDist < maxMoveDist)
     	{
     		transform.position += transform.up * speed * Time.deltaTime;
     		moveDist += speed * Time.deltaTime;
     	}
-    	else if(movingUp && moveDist >= 1)
+    	else if(movingUp && moveDist >= maxMoveDist)
     	{
     		movingUp = false;
     		moveDist = 0;
     		transform.position = end;
     	}
     	// Move down and stop when hitting the bottom
-    	else if(!movingUp && moveDist < 1)
+    	else if(!movingUp && moveDist < maxMoveDist)
     	{
     		transform.position -= transform.up * speed * Time.deltaTime;
     		moveDist += speed * Time.deltaTime;
     	}
-    	else if(!movingUp && moveDist >= 1)
+    	else if(!movingUp && moveDist >= maxMoveDist)
     	{
     		movingUp = true;
     		moving = false;

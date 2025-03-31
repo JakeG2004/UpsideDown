@@ -212,7 +212,7 @@ MonoBehaviour:
   _right: 100
   _jump: 119
   _acceleration: 1.5
-  _topSpeed: 10
+  _topSpeed: 5
   _drag: 0.4
   _jumpForce: 5
   _raycastPos: {fileID: 8051548250613582683}
